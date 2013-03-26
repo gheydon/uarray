@@ -2,7 +2,7 @@
   "name": "heydon/uarray",
   "type": "library",
   "description": "Allow manipulation of PICK Dynamic Arrays in PHP for use with RockSoftware's U2 products",
-  "keywords": ["RedBack", "RocketSoftware", "u2"],
+  "keywords": ["RocketSoftware", "u2"],
   "homepage": "https://github.com/gheydon/uArray",
   "license": "MIT",
   "authors": [
