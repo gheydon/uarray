@@ -204,9 +204,9 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
       }
 
       $keys = array_filter(array_keys($this->data), function ($a) use ($delta) {
-        return $a <= $delta;
+        return $a >= $delta;
       });
-      ksort($keys, SORT_NUMERIC);
+      sort($keys, SORT_NUMERIC);
 
       foreach (array_reverse($keys) as $key) {
         $this->data[$key+1] = $this->data[$key];
@@ -217,7 +217,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
       $this->data[$delta] = new uArray($value, array('parent' =>  $this, 'parent_delta' =>  $delta));
     }
     else if (!$delta) {
-      throw new \Exception('Can only delete positive keyed items in the array');
+      throw new \Exception('Can only insert positive keyed items in the array');
     }
     else {
       throw new \Exception('There can be only numerical keyed items in the array');
