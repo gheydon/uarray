@@ -222,7 +222,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
     else {
       throw new \Exception('There can be only numerical keyed items in the array');
     }
-    unset($this->output);
+    $this->clearCache();
   }
 
   /**
@@ -251,7 +251,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
     else {
       throw new \Exception('There can be only numerical keyed items in the array');
     }
-    unset($this->output);
+    $this->clearCache();
   }
 
   public function setDelta($delta) {
@@ -343,13 +343,13 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
     else {
       $this->explode_array();
       unset($this->data[$delta]);
-      $this->output = NULL;
+      $this->clearCache();
     }
   }
 
   public function offsetUnset($delta) {
     unset($this->data[$delta]);
-    unset($this->output);
+    $this->clearCache();
   }
 
   // Return the count the same as the DCOUNT() in PICK
@@ -387,6 +387,14 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
   public function valid() {
     $max = empty($this->data) || (isset($this->data[0]) && empty($this->data[0]) && count($this->data) == 1) ? 0 : (isset($this->data[0]) ? 1 : max(array_keys($this->data)));
     return $this->iterator_position <= $max;
+  }
+
+  public function clearCache() {
+    $this->output = NULL;
+    // Reset any Parent caches
+    if (isset($this->options['parent'])) {
+      $this->options['parent']->clearCache();
+    }
   }
 
   public function getValues() {
