@@ -420,7 +420,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
     $values = $this->getValues();
 
     $position = array_search($value, $values);
-    return $position !== FALSE ? $position+1 : FALSE;
+    return $position !== FALSE ? $position : FALSE;
   }
 
   public function searchUnique($value) {
