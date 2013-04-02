@@ -193,7 +193,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
    * Insert value before delta
    */
   public function ins($value, $delta) {
-    if (is_numeric($delta) && $delta) {
+    if (is_numeric($delta) && $delta > 0) {
       $this->explode_array();
 
       if (isset($this->data[0])) {
@@ -216,7 +216,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
 
       $this->data[$delta] = new uArray($value, array('parent' =>  $this, 'parent_delta' =>  $delta));
     }
-    else if (!$delta) {
+    else if (is_numeric($delta)) {
       throw new \Exception('Can only insert positive keyed items in the array');
     }
     else {
