@@ -333,7 +333,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
   }
 
   public function offsetSet($delta, $value) {
-    if ((string)$value !== '' && (string)$value !== NULL) {
+    if (is_array($value) || (string)$value !== '' && (string)$value !== NULL) {
       if (!isset($delta)) {
         $delta = count($this)+1;
       }
