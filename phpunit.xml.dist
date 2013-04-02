@@ -1,5 +1,5 @@
 <phpunit
-  bootstrap="tests/autoload.php">
+  bootstrap="tests/bootstrap.php">
   <testsuites>
     <testsuite name="uArray">
       <directory>tests</directory>
