@@ -108,6 +108,10 @@ class uAssocArray implements \ArrayAccess, \Countable, \Iterator {
   }
 
   public function offsetUnset($delta) {
+    if ($delta == $this->key()) {
+      $this->iterator_position--;
+    }
+
     if (isset($this->key_field)) {
       if (($delta = $this->source->get($this->key_field)->searchUnique($delta)) === FALSE) {
         return;
