@@ -45,19 +45,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function set(array $values) {
     if (!isset($this->delta) && isset($this->key_field)) {
-      if (isset($this->key) || $this->key == 0) {
-        $keys = $this->source->get($this->key_field);
-
-        if (($position = $keys->searchUnique($this->key)) !== FALSE) {
-          throw new \Exception("{$this->key} already exists, cannot add new field.");
-        }
-
-        $keys[] = $this->key;
-        $this->delta = $keys->searchUnique($this->key);
-      }
-      else {
-        throw new \Exception('No key specified for new array item.');
-      }
+      $this->setKey();
     }
     // There is no key field so just append everything to the end of the array.
     else {
@@ -130,6 +118,10 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
       throw new \Exception("{$field} is not a valid field");
     }
 
+    if (!isset($this->delta) && isset($this->key_field)) {
+      $this->setKey();
+    }
+
     $this->get($field)->set($value);
   }
 
@@ -160,5 +152,21 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function valid() {
     return !empty($this->current_field);
+  }
+  
+  private function setKey() {
+    if (isset($this->key) || $this->key == 0) {
+      $keys = $this->source->get($this->key_field);
+
+      if (($position = $keys->searchUnique($this->key)) !== FALSE) {
+        throw new \Exception("{$this->key} already exists, cannot add new field.");
+      }
+
+      $keys[] = $this->key;
+      $this->delta = $keys->searchUnique($this->key);
+    }
+    else {
+      throw new \Exception('No key specified for new array item.');
+    }
   }
 }
