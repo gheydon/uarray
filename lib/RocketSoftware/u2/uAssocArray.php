@@ -45,10 +45,6 @@ class uAssocArray implements \ArrayAccess, \Countable, \Iterator {
     return new uAssocArrayItem($this->source, $this->fields, $delta);
   }
 
-  public function set($value) {
-    throw new \Exception('__METHOD__ not implemented');
-  }
-
   public function search($needle, $field) {
     foreach ($this as $key => $data) {
       if ($data[$field] == $needle) {
