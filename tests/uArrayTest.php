@@ -317,4 +317,22 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
 
     $v[1][2][3] = array(1,2);
   }
+  
+  public function testAssocuArrayAssoc() {
+    $record = '1]2]3]4]5^one]two]three]four]five';
+    $v = new RocketSoftware\u2\uArray(str_replace('^]', "\xfd\xfc", $record));
+    
+    $assoc = $v->fetchAssoc(array(2), 1);
+    $test = array(
+      1 => 'one',
+      2 => 'two',
+      3 => 'three',
+      4 => 'four',
+      5 => 'five',
+    );
+
+    foreach ($assoc as $k => $v) {
+      $this->assertEquals((string)$v[2], $test[$k]);
+    }
+  }
 }
