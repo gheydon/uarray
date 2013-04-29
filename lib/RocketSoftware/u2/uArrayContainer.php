@@ -10,31 +10,31 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
       $this->data[$key] = new uArray($value);
     }
   }
-  
+
   public function offsetExists($delta) {
     return isset($this->data[$delta]);
   }
-  
+
   public function offsetGet($delta) {
     return $this->get($delta);
   }
-  
+
   public function offsetSet($delta, $value) {
     $this->data[$delta] = new uArray($value);
   }
-  
+
   public function offsetUnset($delta) {
     unset($this->data[$delta]);
   }
-  
+
   public function fieldExists($delta) {
     return isset($this[$delta]);
   }
-  
+
   public function get($delta) {
     return $this->data[$delta];
   }
-  
+
   /**
    * Fetch an associated array of the defined fields
    */
