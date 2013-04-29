@@ -49,4 +49,35 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
 
     return new uAssocArray($this, $fields, $key);
   }
+
+  /**
+   * Allows for the bulding of the query string based upon the data withing the container.
+   *
+   * @param BOOL $change_only.
+   *  If enabled will only export fields which have been changed since the creation of the object.
+   *
+   * @param array $required.
+   *  a list of fields which should always be included with the returned array
+   *
+   * @param $exclude.
+   *  a regular expression of what fields which should be excluded. However $additional always has priority.
+   *  Note that this is a full regular expression including delimiters and flags.
+   *
+   */
+  public function http_build_query($changed_only = TRUE, array $required = NULL, $exclude = '') {
+    $data = array();
+
+    $required = isset($required) ? $required : array();
+
+    foreach ($this->data as $key => $value) {
+      if ((($changed_only && $value->isTainted()) || !$changed_only || in_array($key, $required))) {
+        if (!in_array($key, $required) && $exclude && preg_match($exclude, $key)) {
+          continue;
+        }
+        $data[$key] = $value;
+      }
+    }
+
+    return http_build_query($data);
+  }
 }
