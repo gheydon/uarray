@@ -2,6 +2,7 @@
 namespace RocketSoftware\u2;
 
 use RocketSoftware\u2\uArray;
+use RocketSoftware\u2\uAssocArraySource;
 
 /*
  * The values are normally defined in RocketSoftware\u2\Redback\uObject.php but this can be loaded before this.
@@ -34,7 +35,7 @@ define('RB_TYPE_AM', 0);
 define('RB_TYPE_VM', 1);
 define('RB_TYPE_SV', 2);
 
-class uArray implements \ArrayAccess, \Countable, \Iterator {
+class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
   private $iterator_position = 1;
   private $data = array();
   private $delimiter_order = array(RB_TYPE_AM => AM, RB_TYPE_VM => VM, RB_TYPE_SV => SV);
@@ -303,6 +304,25 @@ class uArray implements \ArrayAccess, \Countable, \Iterator {
 
   public function getParentMark() {
     return $this->options['delimiter'];
+  }
+
+  public function fieldExists($field) {
+    return is_numeric($field) && $field > 0;
+  }
+
+  /**
+   * Fetch an associated array of the defined fields
+   */
+  public function fetchAssoc() {
+    $fields = func_get_args();
+    $key = NULL;
+
+    if (is_array($fields[0])) {
+      $key = isset($fields[1]) ? $fields[1] : NULL;
+      $fields = $fields[0];
+    }
+
+    return new uAssocArray($this, $fields, $key);
   }
 
   public function getArrayCopy() {
