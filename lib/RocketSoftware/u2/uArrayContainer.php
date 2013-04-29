@@ -83,7 +83,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
         if (!in_array($key, $required) && $exclude && preg_match($exclude, $key)) {
           continue;
         }
-        $data[$key] = $value;
+        $data[$key] = (string)$value;
       }
     }
 
