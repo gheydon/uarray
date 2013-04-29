@@ -20,7 +20,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
   }
 
   public function offsetSet($delta, $value) {
-    $this->data[$delta] = new uArray($value);
+    $this->set($delta, $value);
   }
 
   public function offsetUnset($delta) {
@@ -33,6 +33,15 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
 
   public function get($delta) {
     return $this->data[$delta];
+  }
+  
+  public function set($delta, $value) {
+    if ($value instanceof uArray) {
+      $this->data[$delta] = $value;
+    }
+    else {
+      $this->data[$delta] = new uArray($value);
+    }
   }
 
   /**
