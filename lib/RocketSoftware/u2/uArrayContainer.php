@@ -28,7 +28,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
   }
 
   public function fieldExists($delta) {
-    return isset($this[$delta]);
+    return array_key_exists($delta, $this->data);
   }
 
   public function get($delta) {
