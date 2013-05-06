@@ -161,4 +161,23 @@ class uAssocArrayTest extends \PHPUnit_Framework_TestCase {
     
     $this->assertFalse(isset($assoc[9999]));  
   }
+
+  public function testAddNewArray2() {
+    $data = array(
+      'id' => array(100,200,300,400,500),
+      'a1' => array('value 1', 'value 2', 'value 3', 'value 4', 'value 5'),
+      'a2' => array('value 1', 'value 2', 'value 3', 'value 4', 'value 5'),
+      
+    );
+    $container = new uArrayContainer($data);
+    $assoc = $container->fetchAssoc(array('a1', 'a2'), 'id');
+
+    $assoc[] = array(
+      'a1' => 'abc',
+    );
+    
+    $key = $assoc->getLastKey();
+    $assoc[$key]['a2'] = '123';
+  }
+  
 }
