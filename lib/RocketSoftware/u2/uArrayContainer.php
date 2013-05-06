@@ -99,4 +99,13 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
 
     return http_build_query($data);
   }
+  
+  /**
+   * Reset all the taint flags of all the items.
+   */
+  public function resetTaintFlag() {
+    array_map(function ($uArray) {
+      $uArray->resetTaintedFlag();
+    }, $this->data);
+  }
 }
