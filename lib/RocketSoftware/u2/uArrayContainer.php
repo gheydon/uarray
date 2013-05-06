@@ -2,13 +2,14 @@
 
 namespace RocketSoftware\u2;
 
-class uArrayContainer implements \ArrayAccess, uAssocArraySource {
+class uArrayContainer implements \ArrayAccess, \Iterator, uAssocArraySource {
   private $data = array();
   private $options = array();
+  private $current = NULL;
 
   public function __construct($values = array(), $options = array()) {
     $this->options = $options;
-    
+
     if (isset($values)) {
       foreach ($values as $key => $value) {
         if ($value instanceof uArray) {
@@ -41,10 +42,37 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
     return array_key_exists($delta, $this->data);
   }
 
+  public function current() {
+    return $this->data[$this->current];
+  }
+
+  public function key() {
+    return $this->current;
+  }
+
+  public function next() {
+    $keys = array_keys($this->data);
+
+    if (($position = array_search($this->current, $keys)) !== FALSE) {
+      $position++;
+
+      $this->current = isset($keys[$position]) ? $keys[$position] : NULL;
+    }
+  }
+
+  public function rewind() {
+    $keys = array_keys($this->data);
+    $this->current = reset($keys);
+  }
+
+  public function valid() {
+    return isset($this->data[$this->current]);
+  }
+
   public function get($delta) {
     return $this->data[$delta];
   }
-  
+
   public function set($delta, $value) {
     if ($value instanceof uArray) {
       $this->data[$delta] = $value;
@@ -100,7 +128,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
 
     return http_build_query($data);
   }
-  
+
   /**
    * Reset all the taint flags of all the items.
    */
