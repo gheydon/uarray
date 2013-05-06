@@ -3,6 +3,7 @@
 namespace RocketSoftware\u2;
 
 use RocketSoftware\u2\uAssocArraySource;
+use RocketSoftware\u2\uException;
 
 class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
   private $source = NULL;
@@ -20,16 +21,16 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
     $this->key = $key;
 
     if (!is_numeric($delta) && isset($delta)) {
-      throw new \Exception("{$delta} must be numeric");
+      throw new uException("{$delta} must be numeric");
     }
 
     if (isset($key_field) && !$this->source->fieldExists($key_field)) {
-      throw new \Exception("{$key_field} is not a valid field");
+      throw new uException("{$key_field} is not a valid field");
     }
 
     foreach ($this->fields as $field) {
       if (!$this->source->fieldExists($field)) {
-        throw new \Exception("{$field} is not a valid field");
+        throw new uException("{$field} is not a valid field");
       }
     }
     reset($this->fields);
@@ -37,7 +38,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function get($field) {
     if (!in_array($field, $this->fields)) {
-      throw new \Exception("{$field} is not a valid field");
+      throw new uException("{$field} is not a valid field");
     }
     $value = $this->source->get($field);
     return $value[$this->delta];
@@ -57,10 +58,10 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
     }
     foreach ($values as $field => $value) {
       if ($field == $this->key_field) {
-        throw new \Exception("{$field} is a key field and cannot be set here");
+        throw new uException("{$field} is a key field and cannot be set here");
       }
       if (!in_array($field, $this->fields)) {
-        throw new \Exception("{$field} is not a valid field");
+        throw new uException("{$field} is not a valid field");
       }
       $data = $this->source->get($field);
       $data[$this->delta] = $value;
@@ -95,7 +96,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function offsetExists($field) {
     if (!in_array($field, $this->fields)) {
-      throw new \Exception("{$field} is not a valid field");
+      throw new uException("{$field} is not a valid field");
     }
 
     $value = $this->source->get($field);
@@ -107,7 +108,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function offsetGet($field) {
     if (!in_array($field, $this->fields)) {
-      throw new \Exception("{$field} is not a valid field");
+      throw new uException("{$field} is not a valid field");
     }
 
     return $this->get($field);
@@ -115,7 +116,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function offsetSet($field, $value) {
     if (!in_array($field, $this->fields)) {
-      throw new \Exception("{$field} is not a valid field");
+      throw new uException("{$field} is not a valid field");
     }
 
     if (!isset($this->delta) && isset($this->key_field)) {
@@ -127,7 +128,7 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
 
   public function offsetUnset($field) {
     if (!in_array($field, $this->fields)) {
-      throw new \Exception("{$field} is not a valid field");
+      throw new uException("{$field} is not a valid field");
     }
 
     $value = $this->source->get($field);
@@ -159,14 +160,14 @@ class uAssocArrayItem implements \ArrayAccess, \Iterator, uAssocArraySource {
       $keys = $this->source->get($this->key_field);
 
       if (($position = $keys->searchUnique($this->key)) !== FALSE) {
-        throw new \Exception("{$this->key} already exists, cannot add new field.");
+        throw new uException("{$this->key} already exists, cannot add new field.");
       }
 
       $keys[] = $this->key;
       $this->delta = $keys->searchUnique($this->key);
     }
     else {
-      throw new \Exception('No key specified for new array item.');
+      throw new uException('No key specified for new array item.');
     }
   }
 }

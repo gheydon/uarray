@@ -4,6 +4,7 @@ namespace RocketSoftware\u2;
 
 use RocketSoftware\u2\uAssocArrayItem;
 use RocketSoftware\u2\uAssocArraySource;
+use RocketSoftware\u2\uException;
 
 class uAssocArray implements \ArrayAccess, \Countable, \Iterator {
   private $source = NULL;
@@ -18,13 +19,13 @@ class uAssocArray implements \ArrayAccess, \Countable, \Iterator {
 
     foreach ($this->fields as $field) {
       if (!$this->source->fieldExists($field)) {
-        throw new \Exception("{$field} is not a valid field");
+        throw new uException("{$field} is not a valid field");
       }
     }
 
     if ($key_field) {
       if (!$this->source->fieldExists($key_field)) {
-        throw new \Exception("{$key_field} is not a valid field");
+        throw new uException("{$key_field} is not a valid field");
       }
     }
   }

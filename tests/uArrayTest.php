@@ -100,7 +100,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage There can be only numerical keyed items in the array
    */
   public function testInsTextDelta() {
@@ -110,7 +110,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage Can only insert positive keyed items in the array
    */
   public function testInsNegativeDelta() {
@@ -281,7 +281,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage There can be only numerical keyed items in the array [new]
    */
   public function testInvalidGetDelta() {
@@ -291,7 +291,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage There can be only numerical keyed items in the input array
    */
   public function testInvalidGetDeltaArray() {
@@ -299,7 +299,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage Too many levels created.
    */
   public function testTooManyLevel() {
@@ -309,7 +309,7 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage Too many levels created.
    */
   public function testTooManyLevelArray() {

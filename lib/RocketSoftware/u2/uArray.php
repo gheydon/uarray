@@ -1,8 +1,8 @@
 <?php
 namespace RocketSoftware\u2;
 
-use RocketSoftware\u2\uArray;
 use RocketSoftware\u2\uAssocArraySource;
+use RocketSoftware\u2\uException;
 
 /*
  * The values are normally defined in RocketSoftware\u2\Redback\uObject.php but this can be loaded before this.
@@ -71,7 +71,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
         }
       }
       else {
-        throw new \Exception('Parents Mark is not valid');
+        throw new uException('Parents Mark is not valid');
       }
     }
 
@@ -115,7 +115,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
       return isset($this->data[$delta]) ? $this->data[$delta] : new uArray(NULL, array('parent' =>  $this, 'parent_delta' =>  $delta));
     }
     else {
-      throw new \Exception("There can be only numerical keyed items in the array [{$delta}]");
+      throw new uException("There can be only numerical keyed items in the array [{$delta}]");
     }
   }
 
@@ -146,7 +146,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
 
       if ($delmiter_found !== FALSE) {
         if (!$this->allow_more_levels) {
-          throw new \Exception('Too many levels created.');
+          throw new uException('Too many levels created.');
         }
 
         $this->options['delimiter'] = $this->delimiter_order[$delmiter_found];
@@ -167,13 +167,13 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
     // If this is a standard PHP indexed array starting at 0 then insert each value into ::data as delta+1
     else if (is_array($value)) {
       if (!$this->allow_more_levels) {
-        throw new \Exception('Too many levels created.');
+        throw new uException('Too many levels created.');
       }
       $this->data = array(); // all data is cleared
       $array = $value;
       foreach ($array as $delta => $value) {
         if (!is_numeric($delta)) {
-          throw new \Exception('There can be only numerical keyed items in the input array');
+          throw new uException('There can be only numerical keyed items in the input array');
         }
 
         $this->data[$delta+1] = new uArray($value, array('parent' =>  $this, 'parent_delta' =>  $delta+1));
@@ -186,7 +186,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
       }
     }
     else {
-      throw new \Exception('Unsupported data type');
+      throw new uException('Unsupported data type');
     }
   }
 
@@ -218,10 +218,10 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
       $this->data[$delta] = new uArray($value, array('parent' =>  $this, 'parent_delta' =>  $delta));
     }
     else if (is_numeric($delta)) {
-      throw new \Exception('Can only insert positive keyed items in the array');
+      throw new uException('Can only insert positive keyed items in the array');
     }
     else {
-      throw new \Exception('There can be only numerical keyed items in the array');
+      throw new uException('There can be only numerical keyed items in the array');
     }
     $this->clearCache();
   }
@@ -247,10 +247,10 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
       }
     }
     else if (!$delta) {
-      throw new \Exception('Can only delete positive keyed items in the array');
+      throw new uException('Can only delete positive keyed items in the array');
     }
     else {
-      throw new \Exception('There can be only numerical keyed items in the array');
+      throw new uException('There can be only numerical keyed items in the array');
     }
     $this->clearCache();
   }

@@ -35,7 +35,7 @@ class uAssocArrayTest extends \PHPUnit_Framework_TestCase {
   
   /**
    * @depends testuArrayContainer
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage additional is not a valid field
    */
   public function testFieldNotExist($container) {
@@ -44,7 +44,7 @@ class uAssocArrayTest extends \PHPUnit_Framework_TestCase {
   
   /**
    * @depends testuArrayContainer
-   * @expectedException Exception
+   * @expectedException RocketSoftware\u2\uException
    * @expectedExceptionMessage additional is not a valid field
    */
   public function testKeyNotExist($container) {
