@@ -4,10 +4,20 @@ namespace RocketSoftware\u2;
 
 class uArrayContainer implements \ArrayAccess, uAssocArraySource {
   private $data = array();
+  private $options = array();
 
-  public function __construct($values = array()) {
-    foreach ($values as $key => $value) {
-      $this->data[$key] = new uArray($value);
+  public function __construct($values = array(), $options = array()) {
+    $this->options = $options;
+    
+    if (isset($values)) {
+      foreach ($values as $key => $value) {
+        if ($value instanceof uArray) {
+          $this->data[$key] = $value;
+        }
+        else {
+          $this->data[$key] = new uArray($value, $this->options);
+        }
+      }
     }
   }
 
@@ -40,7 +50,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
       $this->data[$delta] = $value;
     }
     else {
-      $this->data[$delta] = new uArray($value);
+      $this->data[$delta] = new uArray($value, $this->options);
     }
   }
 
