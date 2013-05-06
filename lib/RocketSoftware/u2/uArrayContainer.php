@@ -52,6 +52,7 @@ class uArrayContainer implements \ArrayAccess, uAssocArraySource {
     else {
       $this->data[$delta] = new uArray($value, $this->options);
     }
+    $this->data[$delta]->taintArray();
   }
 
   /**
