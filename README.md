@@ -1,6 +1,6 @@
-# uArray # 
+# uArray
 
-[![Build Status](https://travis-ci.org/gheydon/uArray.png)](https://travis-ci.org/gheydon/uArray)
+[![Build Status](https://travis-ci.org/gheydon/uarray.png)](https://travis-ci.org/gheydon/uarray)
 
 Allow manipulation of PICK Dynamic Arrays in PHP
 
