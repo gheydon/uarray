@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Allow manipulation of PICK Dynamic Arrays in PHP for use with RockSoftware's U2 products",
   "keywords": ["RocketSoftware", "u2"],
-  "homepage": "https://github.com/gheydon/uArray",
+  "homepage": "https://github.com/gheydon/uarray",
   "license": "MIT",
   "authors": [
     {
