@@ -78,4 +78,19 @@ class uArrayContainerTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($container->http_build_query(), 'a2=22');
     $this->assertEquals($container->http_build_query(FALSE, NULL, '/a2/i'), 'a1=1&a3=3');
   }
+  
+  public function testTainted() {
+    $data = array(
+      'id' => array(100,200,300,400,500),
+      'values' => new RocketSoftware\u2\uArray(array('value 1', 'value 2', 'value 3', 'value 4', 'value 5')),
+    );
+    $container = new uArrayContainer($data);
+    $container->resetTaintFlag();
+    
+    $this->assertFalse($container->isTainted());
+    
+    $container['a1'] = 'abc';
+    
+    $this->assertTrue($container->isTainted());
+  }
 }

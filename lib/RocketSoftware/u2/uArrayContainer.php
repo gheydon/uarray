@@ -130,6 +130,18 @@ class uArrayContainer implements \ArrayAccess, \Iterator, uAssocArraySource {
   }
 
   /**
+   * Check if any of the variables have been tainted
+   */
+  public function isTainted() {
+    foreach ($this->data as $key => $value) {
+      if ($value->isTainted()) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * Reset all the taint flags of all the items.
    */
   public function resetTaintFlag() {
