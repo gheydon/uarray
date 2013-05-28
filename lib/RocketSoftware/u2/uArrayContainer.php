@@ -122,7 +122,7 @@ class uArrayContainer implements \ArrayAccess, \Iterator, uAssocArraySource {
         if (!in_array($key, $required) && $exclude && preg_match($exclude, $key)) {
           continue;
         }
-        $data[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
+        $data[$key] = html_entity_decode($value, ENT_QUOTES);
       }
     }
 
