@@ -343,5 +343,6 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
     unset($v[2][3]);
     
     $this->assertEquals((string)$v, strtr('1^2^3^4^5]one^two^^four^five', array('^' => "\xfc", ']' => "\xfd")));
+    $this->assertTrue($v->isTainted());
   }
 }

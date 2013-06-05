@@ -371,6 +371,10 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
     $this->explode_array();
     unset($this->data[$delta]);
     $this->clearCache();
+    $this->taintArray();
+    if (!empty($this->data) && isset($this->options['parent']) && isset($this->options['parent_delta'])) {
+      $this->options['parent']->updateParent($this, $this->options['parent_delta']);
+    }
   }
 
   // Return the count the same as the DCOUNT() in PICK
