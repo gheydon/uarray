@@ -1,6 +1,4 @@
-# uArray
-
-[![Build Status](https://travis-ci.org/gheydon/uarray.png)](https://travis-ci.org/gheydon/uarray)
+# uArray [![Build Status](https://travis-ci.org/gheydon/uarray.png)](https://travis-ci.org/gheydon/uarray)
 
 Allow manipulation of PICK Dynamic Arrays in PHP
 
@@ -11,11 +9,25 @@ PICK Dynamic Arrays are how the PICK operating system stores arrays in the datab
 * Sub Value Mark *SVM* (\xdc) \
 
 These marks allow the system to break up the string into the fields which can be used by the system to indicate the fields and recurring values.
-##Example Variable ##
-`1^2^3^4^5]Value 1^Value 2^Value 3^Value 4^Value 5`
-## Example Code ##
-`$array = new uArray(“1\xfd2\xfd3\xfd4\xfd5\xfeValue 1\xfdValue 2\xfdValue 3\xfdValue 4\xfdValue 5”);
+## Installation
+Installation via [composer](http://getcomposer.com) is the only method supported at this stage. Edit your composer.json to add the following.
+``` js
+{
+    "require": {
+        // ...
+        "heydon/uarray": "1.0.x"
+    }
+}
+```
+
+##Example Variable
+```
+1^2^3^4^5]Value 1^Value 2^Value 3^Value 4^Value 5
+```
+## Example Code
+``` php
+$array = new uArray("1\xfd2\xfd3\xfd4\xfd5\xfeValue 1\xfdValue 2\xfdValue 3\xfdValue 4\xfdValue 5");
 
 $a = $array[1] // VAR<1> = 1^2^3^4^5
 $a = $array[1][2] // VAR<1,2> = 2
-`
+```
