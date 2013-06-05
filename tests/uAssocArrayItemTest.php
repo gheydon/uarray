@@ -34,4 +34,12 @@ class uAssocArrayItemTest extends \PHPUnit_Framework_TestCase {
       $this->assertEquals($key * 100, (string)$value['v2']);
     }
   }
+  
+  public function testUnsetItem() {
+    $assoc = $this->container->fetchAssoc(array('v1', 'v2'), 'id');
+    
+    unset($assoc[300]['v1']);
+    
+    $this->assertEquals($assoc[300]['v1'], '');
+  }
 }

@@ -335,4 +335,13 @@ class uArrayTest extends \PHPUnit_Framework_TestCase {
       $this->assertEquals((string)$v[2], $test[$k]);
     }
   }
+  
+  public function testUnset() {
+    $record = '1^2^3^4^5]one^two^three^four^five';
+    $v = new RocketSoftware\u2\uArray(strtr($record, array('^' => "\xfc", ']' => "\xfd")));
+    
+    unset($v[2][3]);
+    
+    $this->assertEquals((string)$v, strtr('1^2^3^4^5]one^two^^four^five', array('^' => "\xfc", ']' => "\xfd")));
+  }
 }

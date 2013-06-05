@@ -368,6 +368,7 @@ class uArray implements \ArrayAccess, \Countable, \Iterator, uAssocArraySource {
   }
 
   public function offsetUnset($delta) {
+    $this->explode_array();
     unset($this->data[$delta]);
     $this->clearCache();
   }
