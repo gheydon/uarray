@@ -70,7 +70,7 @@ class uArrayContainer implements \ArrayAccess, \Iterator, uAssocArraySource {
   }
 
   public function get($delta) {
-    return $this->data[$delta];
+    return isset($this->data[$delta]) ? $this->data[$delta] : NULL;
   }
 
   public function set($delta, $value) {
